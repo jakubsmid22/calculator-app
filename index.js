@@ -2,7 +2,6 @@ const buttons = document.querySelectorAll("[role='button']");
 const display = document.getElementById("displayBottom");
 const displayTop = document.getElementById("displayTop");
 const soundEffect = document.getElementById("clickSoundEffect");
-let resultOnDisplay = false;
 let topValue = 0;
 let bottomValue = 0;
 let negativeNum;
@@ -15,12 +14,6 @@ buttons.forEach((button) => {
 
     soundEffect.currentTime = 0;
     soundEffect.play();
-
-    if (resultOnDisplay) {
-        resultOnDisplay = !resultOnDisplay;
-        display.textContent = "";
-        displayTop.textContent = "";
-    }
 
     switch (buttonValue) {
       case "AC":
