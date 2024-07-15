@@ -5,6 +5,9 @@ const soundEffect = document.getElementById("clickSoundEffect");
 let resultOnDisplay = false;
 let topValue = 0;
 let bottomValue = 0;
+let negativeNum;
+let bottomNumberBigger;
+let bottomNumberNegative;
 
 buttons.forEach((button) => {
   button.addEventListener("click", () => {
@@ -37,7 +40,6 @@ buttons.forEach((button) => {
             display.textContent !== ""
           ) {
             display.textContent = "+".concat(display.textContent);
-            console.log(display.textContent);
           } else {
             display.textContent = "-".concat(display.textContent);
           }
@@ -45,11 +47,14 @@ buttons.forEach((button) => {
         break;
 
       case "%":
+        bottomValue = parseInt(display.textContent) / 100;
         if (topValue && bottomValue) {
-          bottomValue = bottomValue / 100;
           displayTop.textContent = `${topValue} + ${bottomValue} =`;
           display.textContent = topValue + bottomValue;
           resultOnDisplay = true;
+        }
+        else if (bottomValue) {
+          display.textContent = bottomValue;
         }
         break;
 
@@ -81,38 +86,73 @@ buttons.forEach((button) => {
         break;
 
       case "=":
-        const regex = /^(\d+\.?\d*)\s*([\/x+-])\s*$/;
-        const match = displayTop.textContent.match(regex);
-        if (match) {
-          topValue = parseFloat(match[1]);
-          bottomValue = parseFloat(display.textContent);
-          displayTop.textContent = "";
-          resultOnDisplay = true;
-          
-          switch (match[2]) {
-            case "+":
-              display.textContent = `${add(topValue, bottomValue)}`;
-              break;
-            case "-":
-              display.textContent = `${subtract(topValue, bottomValue)}`;
-              break;
-            case "/":
-              display.textContent = `${divide(topValue, bottomValue)}`;
-              break;
-            case "x":
-              display.textContent = `${multiply(topValue, bottomValue)}`;
-              break;
-            default:
-              display.textContent = "error";
-              resultOnDisplay = false;
+        if (display.textContent) {
+
+            if (!displayTop.textContent) {
+              
+            }
+            else {
+              if ((displayTop.textContent[0] === "+")) {
+                displayTop.textContent = displayTop.textContent.slice(1); 
+            }
+              
+              if (displayTop.textContent[0] === "-") {
+                displayTop.textContent = displayTop.textContent.slice(1);
+                negativeNum = true;
+              }
+
+            const regex = /^(\d+\.?\d*)\s*([\/x+-])\s*$/;
+            const match = displayTop.textContent.match(regex);
+
+            if (match[2] === "+" && negativeNum) {
+                match[2] = "-";
+            }
+            else             if (match[2] === "-" && negativeNum) {
+              match[2] = "+";
           }
-          topValue = 0;
-          bottomValue = 0;
-        } else {
-          display.textContent = "error";
+
+            if (match) {
+              topValue = parseFloat(match[1]);
+              bottomValue = parseFloat(display.textContent);
+              bottomValue > topValue ? bottomNumberBigger  = true : bottomNumberBigger = false;
+              bottomValue < 0 ? bottomNumberNegative = true : bottomNumberNegative = false;
+              displayTop.textContent = "";
+              resultOnDisplay = true;
+              
+              switch (match[2]) {
+                case "+":
+                  display.textContent = `${add(topValue, bottomValue)}`;
+                  break;
+                case "-":
+                  display.textContent = `${subtract(topValue, bottomValue)}`;
+                  break;
+                case "/":
+                  display.textContent = `${divide(topValue, bottomValue)}`;
+                  break;
+                case "x":
+                  display.textContent = `${multiply(topValue, bottomValue)}`;
+                  break;
+                default:
+                  display.textContent = "error";
+                  resultOnDisplay = false;
+              }
+              topValue = 0;
+              bottomValue = 0;
+
+              if (negativeNum && display.textContent[0] === "-") {
+                display.textContent = display.textContent.slice(1);
+              }
+              else if (negativeNum) {
+                if ((bottomNumberBigger && bottomNumberNegative) || (!bottomNumberBigger)) {
+                  display.textContent = "-" + display.textContent;
+                }
+              }
+            } else {
+              display.textContent = "error";
+            }
+            }
         }
         break;
-
       default:
         display.textContent += buttonValue;
         break;
