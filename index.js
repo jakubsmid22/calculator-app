@@ -41,6 +41,7 @@ buttons.forEach((button) => {
 
       case "%":
         bottomValue = parseInt(display.textContent) / 100;
+        topValue = parseFloat(displayTop.textContent)
         if (topValue && bottomValue) {
           displayTop.textContent = `${topValue} + ${bottomValue} =`;
           display.textContent = topValue + bottomValue;
