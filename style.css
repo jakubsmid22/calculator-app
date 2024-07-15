@@ -75,3 +75,18 @@ body {
         width: 100%;
     }
 }
+
+@media (min-width: 520px) {
+    .container {
+        width: 500px;
+        height: 680px;
+    }
+
+    .display-bottom {
+        font-size: 2rem;
+    }
+
+    .display-top {
+        font-size: 1.2rem;
+    }
+}
