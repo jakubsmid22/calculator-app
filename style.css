@@ -89,4 +89,8 @@ body {
     .display-top {
         font-size: 1.2rem;
     }
+    
+    .buttons div {
+        font-size: 2rem;
+    }
 }
