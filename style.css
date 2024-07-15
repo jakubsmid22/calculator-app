@@ -50,6 +50,7 @@ body {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
+    user-select: none;
 }
 
 .buttons div {
@@ -61,6 +62,7 @@ body {
     color: white;
     font-weight: bold;
     border: 1px hsl(0, 0%, 100%, .2) solid;
+    cursor: pointer;
 }
 
 .buttons div:last-child {
