@@ -152,8 +152,6 @@ buttons.forEach((button) => {
         display.textContent += buttonValue;
         break;
     }
-    topValue = 0;
-    bottomValue = 0;
     negativeNum = false;
     bottomNumberBigger = false;
     bottomNumberNegative = false;
